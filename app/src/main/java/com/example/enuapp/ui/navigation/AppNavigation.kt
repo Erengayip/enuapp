@@ -43,23 +43,25 @@ sealed class Screen(val route: String) {
     object Bachelor : Screen("bachelor")
     object Master : Screen("master")
     object PhD : Screen("phd")
+
+    object Login : Screen("login")
+    object Register : Screen("register")
 }
+
 @Composable
 fun AppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "login") {
-        composable("login") { LoginScreen(navController) }
-        composable("register") { RegisterScreen(navController) }
-    }
-}
-/**
- * Main navigation component for the app
- */
-@Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Splash.route // теперь стартуем с Splash
+    ) {
         composable(Screen.Splash.route) {
-            ScreenBackground { SplashScreen(navController) }
+            SplashScreen(navController)
+        }
+        composable(Screen.Login.route) {
+            LoginScreen(navController)
+        }
+        composable(Screen.Register.route) {
+            RegisterScreen(navController)
         }
         composable(Screen.Home.route) {
             ScreenBackground { HomeScreenContent(navController) }
@@ -194,6 +196,5 @@ fun AppNavigation() {
                 description = "Докторантура — это высшая ступень подготовки научных кадров. Программа рассчитана на 3 года и включает проведение самостоятельного научного исследования с защитой диссертации."
             )
         }
-
     }
 }
