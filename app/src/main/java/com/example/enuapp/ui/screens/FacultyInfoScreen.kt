@@ -14,18 +14,48 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun FacultyInfoScreen(title: String, departments: List<Pair<String, String>>, navController: NavHostController) {
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(title, fontSize = 22.sp)
-        androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(16.dp))
-        departments.forEach { (deptName, route) ->
-            Button(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                onClick = { navController.navigate(route) }
+fun FacultyInfoScreen(
+    title: String,
+    departments: List<Pair<String, String>>,
+    navController: NavHostController
+) {
+    ScreenBackground {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+
+        ) {
+            Surface(
+                color = Color.White,
+                shape = RoundedCornerShape(12.dp),
+                tonalElevation = 4.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .alpha(0.9f)
             ) {
-                Text(deptName)
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(text = title, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text("Кафедры:", fontWeight = FontWeight.Medium)
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    departments.forEach { (name, route) ->
+                        FacultyCard(name) { navController.navigate(route) }
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.example.enuapp.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -50,15 +49,30 @@ sealed class Screen(val route: String) {
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
-        // Main screens
-        composable(Screen.Splash.route) { SplashScreen(navController) }
-        composable(Screen.Home.route) { HomeScreen(navController) }
-        composable(Screen.About.route) { AboutScreen() }
-        composable(Screen.Faculties.route) { FacultiesScreen(navController) }
-        composable(Screen.Education.route) { EducationScreen(navController) }
-        composable(Screen.ForApplicants.route) { ForApplicantsScreen() }
-        composable(Screen.ForStudents.route) { ForStudentsScreen(navController) }
-        composable(Screen.Contact.route) { ContactScreen() }
+        composable(Screen.Splash.route) {
+            ScreenBackground { SplashScreen(navController) }
+        }
+        composable(Screen.Home.route) {
+            ScreenBackground { HomeScreenContent(navController) }
+        }
+        composable(Screen.About.route) {
+            ScreenBackground { AboutScreenContent() }
+        }
+        composable(Screen.Faculties.route) {
+            ScreenBackground { FacultiesScreen(navController) }
+        }
+        composable(Screen.Education.route) {
+            ScreenBackground { EducationScreen(navController) }
+        }
+        composable(Screen.ForApplicants.route) {
+            ScreenBackground { ForApplicantsScreenContent() }
+        }
+        composable(Screen.ForStudents.route) {
+            ScreenBackground { ForStudentsScreen(navController) }
+        }
+        composable(Screen.Contact.route) {
+            ScreenBackground { ContactScreenContent() }
+        }
 
         // Faculty screens
         composable(Screen.FacultyIT.route) {
